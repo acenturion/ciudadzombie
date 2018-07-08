@@ -213,8 +213,11 @@ Juego.dibujar = function() {
     var x = tamanio * i
     Dibujante.dibujarRectangulo('red', x, 0, tamanio, 8);
   }
-  //rectangulo de fin
-  // Dibujante.dibujarRectangulo("green", 759, 540, 128, 21);
+
+  if(!this.terminoJuego() || !this.ganoJuego()){
+    Dibujante.dibujarRectangulo("green", 759, 540, 128, 21);
+    
+  }
 };
 
 
@@ -225,9 +228,7 @@ una funcionalidad similar pero para que se muevan.*/
 Juego.moverEnemigos = function() {
   /* COMPLETAR */
   this.enemigos.forEach(enemigo => {
-   
       enemigo.mover();  
-    
   });
 };
 
@@ -258,9 +259,7 @@ Juego.chequearColisiones = function(x, y) {
   var puedeMoverse = true
   this.obstaculos().forEach(function(obstaculo) {
     if (this.intersecan(obstaculo, this.jugador, x, y)) {
-     
       obstaculo.chocar(this.jugador);
-
       puedeMoverse = false
     }
   }, this)
@@ -293,6 +292,7 @@ Juego.dibujarFondo = function() {
 
   // Si se gano el juego hay que mostrar el mensaje de ganoJuego de fondo
   else if (this.ganoJuego()) {
+    this.limpiarJuego();
     Dibujante.dibujarImagen('imagenes/Splash.png', 190, 113, 500, 203);
     document.getElementById('reiniciar').style.visibility = 'visible';
   } else {
@@ -337,5 +337,4 @@ Juego.limpiarJuego = function(){
   this.obstaculosCarretera = [];
   this.enemigos = [];
   this.jugador.sprite ="";
-
 }
